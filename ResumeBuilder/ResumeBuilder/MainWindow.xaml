@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:ResumeBuilder.ViewModels"
         Title="職務経歴書ビルダー"
-        Width="900" Height="600"
+        Width="900" Height="620"
         ResizeMode="NoResize" 
         WindowStyle="None" 
         AllowsTransparency="False"
@@ -18,20 +18,32 @@
 
             <!-- レイアウト定義 -->
             <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
                 <!-- ヘッダー領域 -->
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
                 <!-- コンテンツ領域 -->
+                <RowDefinition Height="*"/>
+                <!-- フッター領域 -->
+                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
 
             <!-- ヘッダー -->
-            <DockPanel Grid.Row="0" Background="#2E3A59" LastChildFill="True">
+            <DockPanel Grid.Row="0" LastChildFill="True">
+                <DockPanel.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#445B7C" Offset="0.0"/>
+                        <GradientStop Color="#1C2533" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </DockPanel.Background>
+
+                <!-- タイトル -->
                 <TextBlock Text="職務経歴書ビルダー"
                            Foreground="White"
                            FontWeight="Bold"
                            VerticalAlignment="Center"
                            Margin="12,0"
                            FontSize="14"/>
+
+                <!-- 終了ボタン -->
                 <Button Content="×" 
                         Width="40"
                         Foreground="White"
@@ -47,6 +59,16 @@
 
             <!-- コンテンツ -->
             <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}"/>
+
+            <!-- フッター -->
+            <DockPanel Grid.Row="2">
+                <DockPanel.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#445B7C" Offset="0.0"/>
+                        <GradientStop Color="#1C2533" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </DockPanel.Background>
+            </DockPanel>
         </Grid>
     </Border>
 </Window>
