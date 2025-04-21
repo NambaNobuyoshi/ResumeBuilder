@@ -1,9 +1,12 @@
 ﻿<Application x:Class="ResumeBuilder.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:ResumeBuilder"
+             xmlns:vm="clr-namespace:ResumeBuilder.ViewModels"
+             xmlns:v="clr-namespace:ResumeBuilder.Views"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <DataTemplate DataType="{x:Type vm:DataSelectorViewModel}">
+            <v:DataSelectorView/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

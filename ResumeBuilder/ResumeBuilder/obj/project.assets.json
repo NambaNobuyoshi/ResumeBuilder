@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ramen\\OneDrive\\デスクトップ\\WPF_Practice\\ResumeBuilder\\ResumeBuilder\\ResumeBuilder.csproj",
+      "projectUniqueName": "C:\\Users\\ramen\\OneDrive\\デスクトップ\\WPF_Practice\\ResumeBuilder\\ResumeBuilder\\ResumeBuilder\\ResumeBuilder.csproj",
       "projectName": "ResumeBuilder",
-      "projectPath": "C:\\Users\\ramen\\OneDrive\\デスクトップ\\WPF_Practice\\ResumeBuilder\\ResumeBuilder\\ResumeBuilder.csproj",
+      "projectPath": "C:\\Users\\ramen\\OneDrive\\デスクトップ\\WPF_Practice\\ResumeBuilder\\ResumeBuilder\\ResumeBuilder\\ResumeBuilder.csproj",
       "packagesPath": "C:\\Users\\ramen\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ramen\\OneDrive\\デスクトップ\\WPF_Practice\\ResumeBuilder\\ResumeBuilder\\obj\\",
+      "outputPath": "C:\\Users\\ramen\\OneDrive\\デスクトップ\\WPF_Practice\\ResumeBuilder\\ResumeBuilder\\ResumeBuilder\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ramen\\AppData\\Roaming\\NuGet\\NuGet.Config",
