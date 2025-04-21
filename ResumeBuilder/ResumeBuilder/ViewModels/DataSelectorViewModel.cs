@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
@@ -10,7 +11,9 @@ namespace ResumeBuilder.ViewModels
     public class DataSelectorViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
-        private const string DataDir = "ResumeData";
+        
+        // exe が置かれているディレクトリを基点にする
+        private static readonly string DataDir = Path.Combine(AppContext.BaseDirectory, "ResumeData");
 
         public DataSelectorViewModel(NavigationStore navigationStore)
         {
