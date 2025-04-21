@@ -13,7 +13,27 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="職務経歴データを選択" FontSize="20" FontWeight="Bold"/>
+        <!-- タイトル＋新規作成ボタン -->
+        <Grid Grid.Row="0" Margin="0,0,0,12">
+            <!-- ← ★ 12px の下マージンで隙間を作成 -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- タイトル -->
+            <TextBlock Text="職務経歴データを選択"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   VerticalAlignment="Center"/>
+
+            <!-- 新規作成ボタン（右寄せ） -->
+            <Button Content="新規作成"
+                Style="{StaticResource PrimaryButtonStyle}"
+                Command="{Binding NewCommand}"
+                Grid.Column="1"
+                VerticalAlignment="Center"/>
+        </Grid>
 
         <!-- データ一覧 -->
         <ListView Grid.Row="1" ItemsSource="{Binding Entries}" SelectedItem="{Binding SelectedEntry, Mode=TwoWay}">
@@ -22,15 +42,25 @@
                     <GridViewColumn Header="名称" DisplayMemberBinding="{Binding Name}" Width="200"/>
                     <GridViewColumn Header="最終更新" DisplayMemberBinding="{Binding LastModified}" Width="140"/>
                     <GridViewColumn Header="職種タグ" DisplayMemberBinding="{Binding Tag}" Width="140"/>
+                    <GridViewColumn Header="備考" DisplayMemberBinding="{Binding Note}" Width="200"/>
                 </GridView>
             </ListView.View>
         </ListView>
 
         <!-- 操作ボタン -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
-            <Button Content="新規作成" Command="{Binding NewCommand}" Width="90" Margin="8,0"/>
-            <Button Content="開く" Command="{Binding OpenCommand}" Width="90" IsEnabled="False" Margin="8,0"/>
-            <Button Content="削除" Command="{Binding DeleteCommand}" Width="90" IsEnabled="False" Margin="8,0"/>
+            <!-- 開く -->
+            <Button Style="{StaticResource PrimaryButtonStyle}"
+                    Content="開く"
+                    Command="{Binding OpenCommand}"
+                    IsEnabled="True"/>
+
+            <!-- 削除 -->
+            <Button Style="{StaticResource DangerButtonStyle}"
+                    Content="削除"
+                    Command="{Binding DeleteCommand}"
+                    IsEnabled="True"/>
         </StackPanel>
+
     </Grid>
 </UserControl>

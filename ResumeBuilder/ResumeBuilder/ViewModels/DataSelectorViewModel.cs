@@ -26,8 +26,8 @@ namespace ResumeBuilder.ViewModels
                         .Select(path => ResumeEntry.FromFile(path)));
 
             NewCommand = new RelayCommand(_ => CreateNew());
-            OpenCommand = new RelayCommand(_ => Open(), _ => SelectedEntry != null);
-            DeleteCommand = new RelayCommand(_ => Delete(), _ => SelectedEntry != null);
+            // OpenCommand = new RelayCommand(_ => Open(), _ => SelectedEntry != null);
+            // DeleteCommand = new RelayCommand(_ => Delete(), _ => SelectedEntry != null);
         }
 
         public ObservableCollection<ResumeEntry> Entries { get; }

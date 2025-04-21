@@ -5,8 +5,16 @@
              xmlns:v="clr-namespace:ResumeBuilder.Views"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <DataTemplate DataType="{x:Type vm:DataSelectorViewModel}">
-            <v:DataSelectorView/>
-        </DataTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- 外部スタイルの読み込み -->
+                <ResourceDictionary Source="Resources/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- 既存のリソース（DataTemplate） -->
+            <DataTemplate DataType="{x:Type vm:DataSelectorViewModel}">
+                <v:DataSelectorView/>
+            </DataTemplate>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

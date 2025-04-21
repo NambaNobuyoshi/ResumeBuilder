@@ -10,6 +10,8 @@ namespace ResumeBuilder
         public DateTime LastModified { get; set; } = DateTime.Now;
         public string Tag { get; set; } = ""; // 職種など
 
+        public string Note { get; set; } = "";
+
         public string FilePath { get; set; } = string.Empty;
 
         public static ResumeEntry CreateNew()
