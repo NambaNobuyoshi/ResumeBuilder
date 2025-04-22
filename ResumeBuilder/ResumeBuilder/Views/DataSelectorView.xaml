@@ -53,13 +53,13 @@
             <Button Style="{StaticResource PrimaryButtonStyle}"
                     Content="開く"
                     Command="{Binding OpenCommand}"
-                    IsEnabled="True"/>
+                    IsEnabled="{Binding SelectedEntry, Converter={StaticResource NullToBool}}"/>
 
             <!-- 削除 -->
             <Button Style="{StaticResource DangerButtonStyle}"
                     Content="削除"
                     Command="{Binding DeleteCommand}"
-                    IsEnabled="True"/>
+                    IsEnabled="{Binding SelectedEntry, Converter={StaticResource NullToBool}}"/>
         </StackPanel>
 
     </Grid>

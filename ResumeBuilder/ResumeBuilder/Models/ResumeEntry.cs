@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 
@@ -6,6 +7,11 @@ namespace ResumeBuilder
 {
     public class ResumeEntry
     {
+        public ProfileData Profile { get; set; } = new ProfileData();
+        public ObservableCollection<CareerItem> Careers { get; set; } = new();
+        public ObservableCollection<QualificationItem> Qualifications { get; set; } = new();
+        public ObservableCollection<SkillItem> Skills { get; set; } = new();
+
         public string Name { get; set; } = "新規データ";
         public DateTime LastModified { get; set; } = DateTime.Now;
         public string Tag { get; set; } = ""; // 職種など
@@ -36,5 +42,33 @@ namespace ResumeBuilder
             var json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(FilePath, json);
         }
+    }
+
+    public class ProfileData
+    {
+        public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Summary { get; set; } = "";
+    }
+
+    public class CareerItem
+    {
+        public string Company { get; set; } = "";
+        public string Period { get; set; } = "";
+        public string Description { get; set; } = "";
+
+        public override string ToString() => $"{Company}（{Period}） - {Description}";
+    }
+
+    public class QualificationItem
+    {
+        public string Name { get; set; } = string.Empty;
+        public override string ToString() => Name;
+    }
+
+    public class SkillItem
+    {
+        public string Name { get; set; } = string.Empty;
+        public override string ToString() => Name;
     }
 }

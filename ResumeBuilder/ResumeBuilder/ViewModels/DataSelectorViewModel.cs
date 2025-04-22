@@ -26,7 +26,7 @@ namespace ResumeBuilder.ViewModels
                         .Select(path => ResumeEntry.FromFile(path)));
 
             NewCommand = new RelayCommand(_ => CreateNew());
-            // OpenCommand = new RelayCommand(_ => Open(), _ => SelectedEntry != null);
+            OpenCommand = new RelayCommand(_ => Open(), _ => SelectedEntry != null);
             // DeleteCommand = new RelayCommand(_ => Delete(), _ => SelectedEntry != null);
         }
 
@@ -51,7 +51,7 @@ namespace ResumeBuilder.ViewModels
         }
         private void Open()
         {
-            // if (SelectedEntry != null) _navigationStore.CurrentViewModel = new EntryHomeViewModel(_navigationStore, SelectedEntry);
+            _navigationStore.CurrentViewModel = new EntryHomeViewModel(_navigationStore, SelectedEntry);
         }
         private void Delete()
         {
