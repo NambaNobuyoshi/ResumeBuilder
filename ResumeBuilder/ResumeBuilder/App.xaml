@@ -15,14 +15,19 @@
             <!-- NullToBoolConverter を追加 -->
             <converters:NullToBoolConverter x:Key="NullToBool"/>
 
-            <!-- 既存の DataSelector 用テンプレート -->
+            <!-- DataSelector 用テンプレート -->
             <DataTemplate DataType="{x:Type vm:DataSelectorViewModel}">
                 <v:DataSelectorView/>
             </DataTemplate>
 
-            <!-- ★ 追加：EntryHomeViewModel 用テンプレート -->
+            <!-- EntryHomeViewModel 用テンプレート -->
             <DataTemplate DataType="{x:Type vm:EntryHomeViewModel}">
                 <v:EntryHomeView/>
+            </DataTemplate>
+
+            <!-- EntryHomeViewModel 用テンプレート -->
+            <DataTemplate DataType="{x:Type vm:ProfileEditViewModel}">
+                <v:ProfileEditView/>
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

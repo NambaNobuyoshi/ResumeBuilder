@@ -2,9 +2,11 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using System.Xml.Linq;
 using ResumeBuilder.Infrastructure;
+using ResumeBuilder.Models;
 
 namespace ResumeBuilder.ViewModels
 {
@@ -12,18 +14,19 @@ namespace ResumeBuilder.ViewModels
     {
         private readonly NavigationStore _navigationStore;
         
-        // exe が置かれているディレクトリを基点にする
-        private static readonly string DataDir = Path.Combine(AppContext.BaseDirectory, "ResumeData");
-
         public DataSelectorViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-            Directory.CreateDirectory(DataDir);
 
-            // Load existing entries
+            // データディレクトリの取得と作成
+            string dataDir = AppSettings.ResumeDataDirectory;
+            Directory.CreateDirectory(dataDir);
+
+            // 既存のファイルを読み込み
             Entries = new ObservableCollection<ResumeEntry>(
-                Directory.EnumerateFiles(DataDir, "*.json")
-                        .Select(path => ResumeEntry.FromFile(path)));
+                Directory.EnumerateFiles(dataDir, "*.json")
+                         .Select(path => ResumeEntry.FromFile(path))
+                         .Where(entry => entry != null));
 
             NewCommand = new RelayCommand(_ => CreateNew());
             OpenCommand = new RelayCommand(_ => Open(), _ => SelectedEntry != null);
@@ -46,7 +49,6 @@ namespace ResumeBuilder.ViewModels
 
         private void CreateNew()
         {
-            var entry = ResumeEntry.CreateNew();
             // _navigationStore.CurrentViewModel = new EntryHomeViewModel(_navigationStore, entry);
         }
         private void Open()
@@ -56,8 +58,22 @@ namespace ResumeBuilder.ViewModels
         private void Delete()
         {
             if (SelectedEntry == null) return;
-            File.Delete(SelectedEntry.FilePath);
-            Entries.Remove(SelectedEntry);
+
+            try
+            {
+                string fullPath = SelectedEntry.GetFullPath(AppSettings.ResumeDataDirectory);
+
+                if (File.Exists(fullPath))
+                {
+                    File.Delete(fullPath);
+                }
+
+                Entries.Remove(SelectedEntry);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"削除に失敗しました: {ex.Message}", "削除エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
