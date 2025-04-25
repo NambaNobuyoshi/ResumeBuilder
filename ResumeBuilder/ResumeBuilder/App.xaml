@@ -25,9 +25,14 @@
                 <v:EntryHomeView/>
             </DataTemplate>
 
-            <!-- EntryHomeViewModel 用テンプレート -->
+            <!-- ProfileEditViewModel 用テンプレート -->
             <DataTemplate DataType="{x:Type vm:ProfileEditViewModel}">
                 <v:ProfileEditView/>
+            </DataTemplate>
+
+            <!-- CareerEditViewModel 用テンプレート -->
+            <DataTemplate DataType="{x:Type vm:CareerEditViewModel}">
+                <v:CareerEditView/>
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

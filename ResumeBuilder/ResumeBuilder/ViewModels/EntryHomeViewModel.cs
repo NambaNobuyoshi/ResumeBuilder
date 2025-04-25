@@ -44,8 +44,8 @@ namespace ResumeBuilder.ViewModels
         }
         private void NavigateToCareer()
         {
-            // TODO: 職歴・資格編集画面へ遷移
-            //_navigationStore.CurrentViewModel = new CareerEditorViewModel(_navigationStore, _entry);
+            // 職歴・資格編集画面へ遷移
+            _navigationStore.CurrentViewModel = new CareerEditViewModel(_navigationStore, _entry);
         }
         private void NavigateToPreview()
         {

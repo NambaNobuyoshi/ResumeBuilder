@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="ResumeBuilder.Views.CareerEditView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ResumeBuilder.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="900">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- タイトル + 戻るボタン -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="職歴・資格・スキル 編集" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Button Content="戻る"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Command="{Binding BackCommand}"
+                    Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        </Grid>
+
+        <!-- メイン編集エリア -->
+        <Grid Grid.Row="1" Margin="0,16,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 職歴 -->
+            <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                <TextBlock Text="職歴" FontWeight="Bold" Margin="0,0,0,4"/>
+                <ListBox ItemsSource="{Binding Careers}" SelectedItem="{Binding SelectedCareer}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <TextBox Text="{Binding NewCareerText, UpdateSourceTrigger=PropertyChanged}" Margin="0,8,0,4"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="追加" Style="{StaticResource PrimaryButtonStyle}" Command="{Binding AddCareerCommand}"/>
+                    <Button Content="削除" Style="{StaticResource DangerButtonStyle}" Command="{Binding RemoveCareerCommand}" IsEnabled="{Binding SelectedCareer, Converter={StaticResource NullToBool}}"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- 資格 -->
+            <StackPanel Grid.Column="1" Margin="0,0,8,0">
+                <TextBlock Text="資格" FontWeight="Bold" Margin="0,0,0,4"/>
+                <ListBox ItemsSource="{Binding Qualifications}" SelectedItem="{Binding SelectedQualification}"/>
+                <TextBox Text="{Binding NewQualificationText, UpdateSourceTrigger=PropertyChanged}" Margin="0,8,0,4"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="追加" Style="{StaticResource PrimaryButtonStyle}" Command="{Binding AddQualificationCommand}"/>
+                    <Button Content="削除" Style="{StaticResource DangerButtonStyle}" Command="{Binding RemoveQualificationCommand}" IsEnabled="{Binding SelectedQualification, Converter={StaticResource NullToBool}}"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- スキル -->
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="スキル" FontWeight="Bold" Margin="0,0,0,4"/>
+                <ListBox ItemsSource="{Binding Skills}" SelectedItem="{Binding SelectedSkill}"/>
+                <TextBox Text="{Binding NewSkillText, UpdateSourceTrigger=PropertyChanged}" Margin="0,8,0,4"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="追加" Style="{StaticResource PrimaryButtonStyle}" Command="{Binding AddSkillCommand}"/>
+                    <Button Content="削除" Style="{StaticResource DangerButtonStyle}" Command="{Binding RemoveSkillCommand}" IsEnabled="{Binding SelectedSkill, Converter={StaticResource NullToBool}}"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <!-- 保存ボタン -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="保存" Style="{StaticResource PrimaryButtonStyle}" Command="{Binding SaveCommand}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
