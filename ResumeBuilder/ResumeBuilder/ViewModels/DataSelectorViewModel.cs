@@ -30,7 +30,7 @@ namespace ResumeBuilder.ViewModels
 
             NewCommand = new RelayCommand(_ => CreateNew());
             OpenCommand = new RelayCommand(_ => Open(), _ => SelectedEntry != null);
-            // DeleteCommand = new RelayCommand(_ => Delete(), _ => SelectedEntry != null);
+            DeleteCommand = new RelayCommand(_ => Delete(), _ => SelectedEntry != null);
         }
 
         public ObservableCollection<ResumeEntry> Entries { get; }
@@ -49,7 +49,7 @@ namespace ResumeBuilder.ViewModels
 
         private void CreateNew()
         {
-            // _navigationStore.CurrentViewModel = new EntryHomeViewModel(_navigationStore, entry);
+            _navigationStore.CurrentViewModel = new EntryHomeViewModel(_navigationStore, null);
         }
         private void Open()
         {

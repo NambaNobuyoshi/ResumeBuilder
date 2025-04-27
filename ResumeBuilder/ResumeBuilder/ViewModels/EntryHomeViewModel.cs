@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ResumeBuilder.Infrastructure;
 using ResumeBuilder.Models;
@@ -11,14 +12,21 @@ namespace ResumeBuilder.ViewModels
         private readonly ResumeEntry _entry;
 
         public EntryHomeViewModel() { } // デザイナ用 ctor
-        public EntryHomeViewModel(NavigationStore navigationStore, ResumeEntry entry)
+        public EntryHomeViewModel(NavigationStore nav, ResumeEntry? entry)
         {
-            _navigationStore = navigationStore;
-            _entry = entry;
+            _navigationStore = nav;
+            _entry = entry ?? new ResumeEntry      // ← 新規テンプレ
+            {
+                Name = "新規経歴書",
+                FileName = $"resume_{Guid.NewGuid():N}.json",
+                LastModified = DateTime.Now
+            };
 
             EditProfileCommand = new RelayCommand(_ => NavigateToProfile());
             EditCareerCommand = new RelayCommand(_ => NavigateToCareer());
-            PreviewCommand = new RelayCommand(_ => NavigateToPreview());
+            PreviewCommand = new RelayCommand(
+                _ => NavigateToPreview(),
+                _ => CanPreview());
             BackCommand = new RelayCommand(_ => NavigateBack());
         }
 
@@ -51,6 +59,14 @@ namespace ResumeBuilder.ViewModels
         {
             // TODO: プレビュー画面へ遷移
             //_navigationStore.CurrentViewModel = new PreviewViewModel(_navigationStore, _entry);
+        }
+
+        private bool CanPreview()
+        {
+            return !string.IsNullOrWhiteSpace(Name) &&
+                   !string.IsNullOrWhiteSpace(Email) &&
+                   !string.IsNullOrWhiteSpace(Summary) &&
+                   (Careers.Count > 0 || Qualifications.Count > 0 || Skills.Count > 0);
         }
 
         private void NavigateBack()
