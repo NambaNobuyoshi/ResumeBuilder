@@ -59,6 +59,15 @@ namespace ResumeBuilder.ViewModels
         {
             if (SelectedEntry == null) return;
 
+            // 確認ダイアログ
+            var result = MessageBox.Show(
+                $"「{SelectedEntry.Name}」を削除してもよろしいですか？\nこの操作は元に戻せません。",
+                "削除の確認",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (result != MessageBoxResult.Yes) return;
+
             try
             {
                 string fullPath = SelectedEntry.GetFullPath(AppSettings.ResumeDataDirectory);
