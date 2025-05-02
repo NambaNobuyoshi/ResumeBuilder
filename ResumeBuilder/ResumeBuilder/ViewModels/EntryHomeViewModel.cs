@@ -12,6 +12,8 @@ namespace ResumeBuilder.ViewModels
     {
         private readonly NavigationStore _navigationStore;
         private readonly ResumeEntry _entry;
+        private string _selectedGenre;
+        private string _editableNote;
 
         public EntryHomeViewModel() { } // デザイナ用 ctor
         public EntryHomeViewModel(NavigationStore nav, ResumeEntry? entry)
@@ -25,7 +27,14 @@ namespace ResumeBuilder.ViewModels
             };
 
             _editableName = _entry.Name;
+            _selectedGenre = _entry.Tag;
+            _editableNote = _entry.Note;
 
+            GenreOptions = new ObservableCollection<string> { "エンジニア", "PM", "営業" };
+
+            SaveMetaCommand = new RelayCommand(
+                _ => SaveMeta(),
+                _ => CanSaveMeta());
             EditProfileCommand = new RelayCommand(_ => NavigateToProfile());
             EditCareerCommand = new RelayCommand(_ => NavigateToCareer());
             PreviewCommand = new RelayCommand(
@@ -54,12 +63,27 @@ namespace ResumeBuilder.ViewModels
         public string Email => _entry.Profile.Email;
         public string Summary => _entry.Profile.Summary;
 
+        public ObservableCollection<string> GenreOptions { get; }
+
+        public string SelectedGenre
+        {
+            get => _selectedGenre;
+            set { if (SetProperty(ref _selectedGenre, value)) InvalidateSaveMeta(); }
+        }
+
+        public string EditableNote
+        {
+            get => _editableNote;
+            set { if (SetProperty(ref _editableNote, value)) InvalidateSaveMeta(); }
+        }
+
         // リスト表示用
         public ObservableCollection<CareerItem> Careers => _entry.Careers;
         public ObservableCollection<QualificationItem> Qualifications => _entry.Qualifications;
         public ObservableCollection<SkillItem> Skills => _entry.Skills;
 
         public ICommand SaveNameCommand { get; }
+        public ICommand SaveMetaCommand { get; }
         public ICommand EditProfileCommand { get; }
         public ICommand EditCareerCommand { get; }
         public ICommand PreviewCommand { get; }
@@ -78,6 +102,28 @@ namespace ResumeBuilder.ViewModels
             catch (IOException ex)
             {
                 MessageBox.Show($"名称の保存に失敗しました: {ex.Message}",
+                                "保存エラー",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+            }
+        }
+        private bool CanSaveMeta() => _selectedGenre != _entry.Tag || _editableNote != _entry.Note;
+
+        private void InvalidateSaveMeta() => CommandManager.InvalidateRequerySuggested();
+
+        private void SaveMeta()
+        {
+            _entry.Tag = _selectedGenre;
+            _entry.Note = _editableNote;
+            _entry.LastModified = DateTime.Now;
+
+            try
+            {
+                _entry.SaveToFile(AppSettings.ResumeDataDirectory);
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show($"保存に失敗しました: {ex.Message}",
                                 "保存エラー",
                                 MessageBoxButton.OK,
                                 MessageBoxImage.Error);
